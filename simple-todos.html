@@ -1,0 +1,66 @@
+<!-- simple-todos.html -->
+<head>
+    <title>Todo List</title>
+</head>
+
+<body>
+//facebook
+<script>
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : '810130389075335',
+            xfbml      : true,
+            version    : 'v2.3'
+        });
+    };
+
+    (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="container">
+    <header>
+        <h1 id="title">Todo List</h1><br>
+
+        <h1>Incomplete count: {{incompleteCount}}</h1>
+
+        <label class="hide-completed">
+            <input type="checkbox" checked="{{hideCompleted}}" />
+            Hide completed tasks
+        </label>
+
+        {{> loginButtons }}
+        {{#if currentUser}}
+        <form class="new-task">
+            <input type="text" name="text" placeholder="Type to add new tasks" />
+        </form>
+        {{/if}}
+    </header>
+
+    <ul>
+        {{#each tasks}}
+        {{> task}}
+        {{/each}}
+    </ul>
+</div>
+</body>
+
+<template name="task">
+    <li class="{{#if checked}}checked{{/if}}">
+        <button class="delete">&times;</button>
+
+        <input type="checkbox" checked="{{checked}}" class="toggle-checked" />
+
+        {{#if username}}
+            <span class="text"><strong>{{username}}</strong> - {{text}}</span>
+        {{else}}
+            <span class="text"><strong>Unknown</strong> - {{text}}</span>
+        {{/if}}
+
+    </li>
+</template>
